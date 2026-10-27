@@ -1,0 +1,26 @@
+# Environment variables
+.env
+
+# Node.js
+frontend/node_modules/
+frontend/dist/
+
+# Java
+backend/target/
+backend/.classpath
+backend/.project
+backend/.settings/
+
+# Maven
+backend/.mvn/wrapper/maven-wrapper.jar
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

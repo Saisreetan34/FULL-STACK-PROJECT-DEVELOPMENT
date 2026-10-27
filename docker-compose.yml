@@ -1,0 +1,40 @@
+services:
+
+  postgres:
+    image: postgres:16
+    container_name: soa-postgres
+    environment:
+      POSTGRES_DB: exam_2400030411
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d exam_2400030411"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    image: saisreetan/docker-backend-2400030411:latest
+    container_name: soa-backend
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8081:8081"
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+
+  frontend:
+    image: saisreetan/docker-frontend-2400030411:latest
+    container_name: soa-frontend
+    depends_on:
+      - backend
+    ports:
+      - "5173:80"
+
+volumes:
+  postgres-data:
